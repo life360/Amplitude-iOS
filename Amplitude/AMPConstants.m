@@ -5,8 +5,8 @@
 
 NSString *const kAMPLibrary = @"amplitude-ios";
 NSString *const kAMPVersion = @"3.14.1";
-NSString *const kAMPEventLogDomain = @"api.amplitude.com";
-NSString *const kAMPEventLogUrl = @"https://api.amplitude.com/";
+NSString *const kAMPEventLogDomain = @"amplitude.life360.com";
+NSString *const kAMPEventLogUrl = @"https://amplitude.life360.com/";
 NSString *const kAMPDefaultInstance = @"$default_instance";
 const int kAMPApiVersion = 3;
 const int kAMPDBVersion = 3;
