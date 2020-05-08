@@ -49,7 +49,9 @@
 
 -(NSString*) appVersion {
     if (!_appVersion) {
-        _appVersion = SAFE_ARC_RETAIN([[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleShortVersionString"]);
+        // This was updated becuase Data Engineering needs a way to determine if an event is coming from
+        // develop, alpha, beta or production see https://life360.atlassian.net/browse/FORE-399
+        _appVersion = SAFE_ARC_RETAIN([[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleShortVersionStringAmplitude"]);
     }
     return _appVersion;
 }

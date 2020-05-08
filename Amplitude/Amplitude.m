@@ -959,6 +959,21 @@ static NSString *const SEQUENCE_NUMBER = @"sequence_number";
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[postData length]] forHTTPHeaderField:@"Content-Length"];
 
+    // This was updated because Data Engineering needs a way to determine if an event is coming from
+    // develop, alpha, beta or production see https://life360.atlassian.net/browse/FORE-399
+    // When we add the data to the header of the POST they can divert the event to a different
+    // pipeline directly in the load balancer.
+    NSString *appEnvironment = @"production";
+    NSString *bundleString = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleShortVersionStringAmplitude"];
+    if ([bundleString containsString:@"develop"]){
+        appEnvironment = @"develop";
+    } else if ([bundleString containsString:@"alpha"]) {
+        appEnvironment = @"alpha";
+    } else if ([bundleString containsString:@"beta"]){
+        appEnvironment = @"beta";
+    }
+
+    [request setValue:appEnvironment forHTTPHeaderField:@"App-Environment"];
     [request setHTTPBody:postData];
     AMPLITUDE_LOG(@"Events: %@", events);
 
